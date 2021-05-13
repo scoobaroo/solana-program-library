@@ -1,6 +1,5 @@
 import { Enum, Assignable, SCHEMA } from './solana-borsh';
 import { AccountMeta, PublicKey, TransactionInstruction } from '@solana/web3.js';
-import * as BN from 'bn.js';
 
 export const PROGRAM_ID: PublicKey = new PublicKey(
   'ReciQBw6sQKH9TVVJQDnbnJ5W7FP539tPHjZhRF4E9r',
@@ -10,7 +9,7 @@ export class Initialize extends Assignable {
 }
 
 export class Write extends Assignable {
-  offset: BN;
+  offset: number;
   data: Uint8Array;
 }
 
@@ -30,7 +29,7 @@ export class RecordInstruction extends Enum {
     return new RecordInstruction({initialize: new Initialize({})});
   }
 
-  static write(offset: BN, data: Uint8Array): RecordInstruction {
+  static write(offset: number, data: Uint8Array): RecordInstruction {
     return new RecordInstruction({write: new Write({offset, data})});
   }
 
@@ -56,7 +55,7 @@ export function initialize(recordAccount: PublicKey, authority: PublicKey): Tran
   });
 }
 
-export function write(recordAccount: PublicKey, authority: PublicKey, offset: BN, recordData: Uint8Array): TransactionInstruction {
+export function write(recordAccount: PublicKey, authority: PublicKey, offset: number, recordData: Uint8Array): TransactionInstruction {
   const keys: AccountMeta[] = [
     {pubkey: recordAccount, isSigner: false, isWritable: true},
     {pubkey: authority, isSigner: true, isWritable: false},

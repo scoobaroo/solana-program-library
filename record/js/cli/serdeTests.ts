@@ -3,7 +3,6 @@ import { Assignable } from '../client/solana-borsh';
 import { RecordPublicKey, Record, Data } from '../client/record';
 import { RecordInstruction } from '../client/instruction';
 import { encode } from 'bs58';
-import * as BN from 'bn.js';
 import { strict as assert } from 'assert';
 
 export function testRecord() {
@@ -43,7 +42,7 @@ function testInitialize() {
 }
 
 function testWrite() {
-  const offset = new BN('ffffffffffffffff', 16);
+  const offset = 1_000_000;
   const data = new Uint8Array([2, 4, 1, 2, 4]);
   const instruction = RecordInstruction.write(offset, data);
   testSerialization(RecordInstruction, instruction);

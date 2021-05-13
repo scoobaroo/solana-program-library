@@ -4,9 +4,7 @@ import { PublicKey } from '@solana/web3.js';
 // Class wrapping a plain object
 export abstract class Assignable {
   constructor(properties: any) {
-    Object.keys(properties).map((key) => {
-      this[key] = properties[key];
-    });
+    Object.assign(this, properties);
   }
 
   encode(): Buffer {
