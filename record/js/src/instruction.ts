@@ -1,22 +1,21 @@
-import { Enum, Assignable, SCHEMA } from './solana-borsh';
-import { AccountMeta, PublicKey, TransactionInstruction } from '@solana/web3.js';
+import { AccountMeta, PublicKey, Enum, Struct, SOLANA_SCHEMA, TransactionInstruction } from '@solana/web3.js';
 
 export const PROGRAM_ID: PublicKey = new PublicKey(
   'ReciQBw6sQKH9TVVJQDnbnJ5W7FP539tPHjZhRF4E9r',
 );
 
-export class Initialize extends Assignable {
+export class Initialize extends Struct {
 }
 
-export class Write extends Assignable {
+export class Write extends Struct {
   offset: number;
   data: Uint8Array;
 }
 
-export class SetAuthority extends Assignable {
+export class SetAuthority extends Struct {
 }
 
-export class CloseAccount extends Assignable {
+export class CloseAccount extends Struct {
 }
 
 export class RecordInstruction extends Enum {
@@ -68,16 +67,16 @@ export function write(recordAccount: PublicKey, authority: PublicKey, offset: nu
   });
 }
 
-SCHEMA.set(RecordInstruction, {kind: 'enum', field: 'enum', values: [
+SOLANA_SCHEMA.set(RecordInstruction, {kind: 'enum', field: 'enum', values: [
   ['initialize', Initialize],
   ['write', Write],
   ['setAuthority', SetAuthority],
   ['closeAccount', CloseAccount],
 ]});
-SCHEMA.set(Initialize, {kind: 'struct', fields: []});
-SCHEMA.set(Write, {kind: 'struct', fields: [
+SOLANA_SCHEMA.set(Initialize, {kind: 'struct', fields: []});
+SOLANA_SCHEMA.set(Write, {kind: 'struct', fields: [
   ['offset', 'u64'],
   ['data', ['u8']],
 ]});
-SCHEMA.set(SetAuthority, {kind: 'struct', fields: []});
-SCHEMA.set(CloseAccount, {kind: 'struct', fields: []});
+SOLANA_SCHEMA.set(SetAuthority, {kind: 'struct', fields: []});
+SOLANA_SCHEMA.set(CloseAccount, {kind: 'struct', fields: []});

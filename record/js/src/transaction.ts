@@ -1,11 +1,11 @@
 import { Data, Record } from './record';
 import { Util } from './util';
 import { PROGRAM_ID, initialize, write } from './instruction';
-import { Account, Connection, PublicKey, SystemProgram, Transaction, TransactionSignature, sendAndConfirmTransaction } from '@solana/web3.js';
+import { Keypair, Connection, PublicKey, SystemProgram, Transaction, sendAndConfirmTransaction } from '@solana/web3.js';
 
 export class RecordTransaction {
-  static async createRecord(connection: Connection, payer: Account, authority: Account, data: Data): Promise<Account> {
-    const recordKey = new Account();
+  static async createRecord(connection: Connection, payer: Keypair, authority: Keypair, data: Data): Promise<Keypair> {
+    const recordKey = Keypair.generate();
 
     // Allocate memory for the account
     const recordSize = Record.size();

@@ -1,13 +1,12 @@
-import { Account, Connection, PublicKey, Transaction } from '@solana/web3.js';
-import { RecordPublicKey, Record, Data } from '../client/record';
+import { Connection, PublicKey, Transaction } from '@solana/web3.js';
+import { Record, Data } from '../src/record';
 import { strict as assert } from 'assert';
 
-import { testRecord, testPublicKey, testInstructions } from './serdeTests';
+import { testRecord, testInstructions } from './serdeTests';
 import { testInitialize } from './transactionTests';
 
 async function main() {
   testRecord();
-  testPublicKey();
   testInstructions();
 
   const url = "http://127.0.0.1:8899";

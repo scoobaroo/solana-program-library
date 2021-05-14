@@ -1,25 +1,14 @@
-import { Account } from '@solana/web3.js';
-import { Assignable } from '../client/solana-borsh';
-import { RecordPublicKey, Record, Data } from '../client/record';
-import { RecordInstruction } from '../client/instruction';
+import { Keypair, PublicKey } from '@solana/web3.js';
+import { Assignable } from '../src/solana-borsh';
+import { Record, Data } from '../src/record';
+import { RecordInstruction } from '../src/instruction';
 import { encode } from 'bs58';
 import { strict as assert } from 'assert';
 
 export function testRecord() {
-  const keypair = new Account();
-  const recordKey = new RecordPublicKey({bytes: keypair.publicKey.toBuffer()});
-  const record = new Record({version: 1, authority: recordKey, data: new Data({bytes: [1,2,3,4,5,6,7,8]})});
+  const keypair = Keypair.generate();
+  const record = new Record({version: 1, authority: keypair.publicKey, data: new Data({bytes: [1,2,3,4,5,6,7,8]})});
   testSerialization(Record, record);
-}
-
-export function testPublicKey() {
-  const keypair = new Account();
-  const publicKey = keypair.publicKey;
-  const solanaBuffer = publicKey.toBuffer();
-  const recordKey = new RecordPublicKey({bytes: solanaBuffer});
-  const recordKeyBuffer = recordKey.encode();
-  assert.deepEqual(solanaBuffer, recordKeyBuffer);
-  assert.deepEqual(publicKey, recordKey.toPublicKey());
 }
 
 export function testInstructions() {
